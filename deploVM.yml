@@ -1,0 +1,4 @@
+- name: Deploy a VM on Proxmox
+  hosts: localhost
+  roles:
+    - proxmox_vm

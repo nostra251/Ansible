@@ -1,0 +1,28 @@
+---
+# tasks file for roles/proxmox_vm
+
+
+- name: Authenticate with Proxmox
+  community.general.proxmox:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    validate_certs: false
+  register: proxmox_api_token
+
+- name: Deploy a new VM from a template
+  community.general.proxmox_kvm:
+    api_host: "{{ proxmox_host }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    validate_certs: false
+    node: "{{ proxmox_node }}"
+    vmid: "{{ 100 + item }}"
+    name: "{{ vm_name }}"
+    memory: "{{ vm_memory }}"
+    cores: "{{ vm_cores }}"
+    disk: "{{ vm_disk_size }}"
+    net0: "bridge={{ vm_network }}"
+    clone: "{{ vm_template }}"
+    start: true
+  loop: "{{ range(1, 2) | list }}" # Pour créer plusieurs VMs si nécessaire
