@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Installer Ansible via pip
-RUN pip3 install --no-cache-dir ansible
+RUN pip3 install --no-cache-dir ansible-lint
 
 # Configuration de l'utilisateur pour SSH (optionnel)
 RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
